@@ -1,11 +1,11 @@
 import originalFetch from 'isomorphic-fetch';
 import fetchBuilder from 'fetch-retry';
 import { notify } from 'app/providers/with-notifications';
-import { ApiRealty } from 'shared/api';
+import { ApiAuth, ApiRealty } from 'shared/api';
 
 export class Api {
   static Realty = ApiRealty;
-  // static Auth = ApiAuth;
+  static Auth = ApiAuth;
 
   static handleErrorMessage(obj) {
     if (!obj.message && !obj.msg) return;

@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 import { login } from '../../../store/auth/slice.js';
 import { useDispatch } from 'react-redux';
 import { isEmailValid, isPasswordValid, isUsernameValid } from '../auth.validators.js';
-
-import { BASE_API } from '../../../constants.js';
 import { Input } from '../../../shared/ui/input';
 import { FieldError } from '../../../shared/ui/error-field';
+import { Api } from '../../../app/model/api.js';
 
 const SignUp = ({ onClickLink }) => {
   const dispatch = useDispatch();
@@ -15,7 +13,7 @@ const SignUp = ({ onClickLink }) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordConfirm, setConfirmPassword] = useState('');
   const [match, setMatch] = useState(true);
 
   const [errors, setErrors] =
@@ -25,12 +23,12 @@ const SignUp = ({ onClickLink }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password !== passwordConfirm) {
       setMatch(false);
       return;
-    } else {
-      setMatch(true);
     }
+
+    setMatch(true);
 
     const nameValid = isUsernameValid(name);
     const emailValid = isEmailValid(email);
@@ -44,8 +42,9 @@ const SignUp = ({ onClickLink }) => {
 
     if (nameValid && emailValid && passwordValid) {
       try {
-        const { data } = await axios.post(`${BASE_API}/signup`, { name, email, password });
-        dispatch(login(data));
+        const { user } = await Api.Auth.signUp({ name, email, password, passwordConfirm });
+
+        dispatch(login({ user }));
       } catch (error) {
         console.error(error);
       }
@@ -77,12 +76,14 @@ const SignUp = ({ onClickLink }) => {
                placeholder={'Password'} />
         <FieldError isVisible={errors.password} errorMessage={'This is not valid password'} />
       </div>
-      <Input name={'confirmPassword'}
-             type='password'
-             value={confirmPassword}
-             onChange={({ target }) => setConfirmPassword(target.value)}
-             placeholder={'Confirm password'} />
-      <FieldError isVisible={!match} errorMessage={'Password is not matched'} />
+      <div className='mb-4'>
+        <Input name={'passwordConfirm'}
+               type='password'
+               value={passwordConfirm}
+               onChange={({ target }) => setConfirmPassword(target.value)}
+               placeholder={'Confirm password'} />
+        <FieldError isVisible={!match} errorMessage={'Password is not matched'} />
+      </div>
       <button
         className='self-center px-10 py-1 mb-5 bg-pink-600 hover:bg-pink-700 text-white  rounded'>
         Create Account
