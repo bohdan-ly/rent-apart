@@ -1,25 +1,19 @@
-import axios, { AxiosRequestConfig, HttpStatusCode } from "axios";
+import axios, { HttpStatusCode } from 'axios';
 
-import { notify } from "app/providers/with-notifications";
-import { ResponseStatus } from "../../../main";
+import { notify } from 'app/providers/with-notifications';
 
 class ApiProvider {
-  static handleErrorMessage(obj: {
-    data?: {} | string;
-    results?: number;
-    status: ResponseStatus;
-    message: string;
-  }) {
+  static handleErrorMessage(obj) {
     if (!obj.message) return;
     // if (obj.code === 4003) return;
 
     notify({
-      message: obj.message || "",
-      type: "10000",
+      message: obj.message || '',
+      type: '10000',
     });
   }
 
-  static handleErrorCodes(code: number): void {
+  static handleErrorCodes(code) {
     if (code === undefined || code === null) return;
     switch (code) {
       case 4003: {
@@ -28,17 +22,12 @@ class ApiProvider {
     }
   }
 
-  static async fetch(config: AxiosRequestConfig<any>) {
+  static async fetch(config) {
     try {
       // const fetch = fetchBuilder(originalFetch, options);
 
-      const data = await axios<{
-        data?: {} | string;
-        results?: number;
-        status: ResponseStatus;
-        message: string;
-      }>({
-        method: "GET",
+      const data = await axios({
+        method: 'GET',
         validateStatus: function (status) {
           return status >= 200 && status < 400;
         },
@@ -48,12 +37,12 @@ class ApiProvider {
       ApiProvider.handleErrorCodes(data.status);
 
       if (data.status === 400 || data.status === 500) {
-        ApiProvider.handleErrorMessage(data as any);
+        ApiProvider.handleErrorMessage(data);
       }
 
       return data;
-    } catch (err: any) {
-      console.error("Fetch failed");
+    } catch (err) {
+      console.error('Fetch failed');
       console.error(err, config);
       // notify({
       //   message: err.msg || err.message || '',

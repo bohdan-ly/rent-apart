@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import categories from 'store/categories/slice';
+import realty from 'store/realty/slice';
 
 export const store = configureStore({
   reducer: {
-    // categories,
+    realty,
   },
 });
