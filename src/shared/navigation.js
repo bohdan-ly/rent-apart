@@ -9,6 +9,9 @@ export const PATHS = {
   main: {
     root: '/home',
   },
+  auth: {
+    root: '/auth',
+  },
   categories: {
     root: '/categories',
     category: '/categories/:categoryId',
