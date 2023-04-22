@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { login } from '../../../store/auth/auth.slice.js';
+import axios from 'axios';
+
+import { login } from '../../../store/auth/slice.js';
 import { useDispatch } from 'react-redux';
 import { isEmailValid, isPasswordValid, isUsernameValid } from '../auth.validators.js';
-import axios from 'axios';
-import { BASE_URL } from '../../../constants.js';
+
+import { BASE_API } from '../../../constants.js';
 
 
 const SignUp = ({ onClickLink }) => {
@@ -51,14 +53,15 @@ const SignUp = ({ onClickLink }) => {
 
     try {
 
-      const { ...user } = {
+      const { user } = {
         id: Date.now().toFixed(2).toString(),
         name,
         email,
         password,
       };
 
-      axios.post(BASE_URL, {});
+// Todo create
+      axios.post(BASE_API, { user });
 
       dispatch(login({ user }));
 
@@ -75,8 +78,8 @@ const SignUp = ({ onClickLink }) => {
       <input name={'Name'}
              className='p-1 bg-transparent mb-5 rounded-md border-b-2 outline-none border-white text-white text-md placeholder-white'
              type='text'
-             value={username}
-             onChange={({ target }) => setUsername(target.value)}
+             value={name}
+             onChange={({ target }) => setName(target.value)}
              placeholder={'Name'} />
       {errors.name && <span className={'text-red-500'}>This is not valid username</span>}
       <input name={'email'}

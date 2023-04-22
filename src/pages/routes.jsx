@@ -3,8 +3,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 import { PATHS } from 'shared/navigation';
 
-import WelcomePage from 'pages/welcome';
 import AuthPage from 'pages/auth';
+import DashboardPage from 'pages/dashboard';
 
 const lazyLoad = (loadedModule) =>
   React.lazy(() =>
@@ -26,7 +26,7 @@ const routesMap = [
   },
   {
     path: PATHS.main.root,
-    element: <WelcomePage />,
+    element: <DashboardPage />,
   },
   {
     path: PATHS.auth.root,
@@ -44,4 +44,4 @@ const routesMap = [
   },
 ];
 
-export const Routes: React.FC = () => useRoutes(routesMap);
+export const Routes = () => useRoutes(routesMap);

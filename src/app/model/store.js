@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import auth from 'store/auth/auth.slice.js';
 
-// import categories from 'store/categories/slice';
+import realty from 'store/realty/slice';
+import auth from 'store/auth/slice.js';
 
 export const store = configureStore({
-  reducer: { auth },
+  reducer: {
+    realty,
+    auth,
+  },
 });

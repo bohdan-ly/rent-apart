@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
+import { fetchRealties } from 'store/realty/slice';
+
 // import { Category } from 'store/categories/types';
 // import { Product } from 'store/fridge/types';
 // import { getUser } from "~selectors/userSelectors";
@@ -51,7 +53,7 @@ export const ConnectAPI = ({ children }) => {
 
     setProgress(25);
 
-    // await dispatch(fetchProducts({}));
+    await dispatch(fetchRealties({}));
 
     setProgress(50);
 

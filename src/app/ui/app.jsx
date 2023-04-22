@@ -5,6 +5,7 @@ import { ConnectAPI } from 'app/providers/with-api';
 // import { ProjectPopup } from 'components/project';
 import { Routes } from 'pages';
 import { Loading } from 'shared/loading';
+import Layout from 'pages/layout/Layout';
 
 export const App = () => {
   const isReady = true;
@@ -20,7 +21,7 @@ export const App = () => {
           </div>
         }
       >
-        {(isReady && <Routes />) || <Loading />}
+        <Layout>{(isReady && <Routes />) || <Loading />}</Layout>
       </Suspense>
     </ConnectAPI>
   );
