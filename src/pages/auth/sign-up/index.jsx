@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { isEmailValid, isPasswordValid, isUsernameValid } from '../auth.validators.js';
 
 import { BASE_API } from '../../../constants.js';
-
+import { Input } from '../../../shared/ui/input';
+import { FieldError } from '../../../shared/ui/error-field';
 
 const SignUp = ({ onClickLink }) => {
   const dispatch = useDispatch();
@@ -17,29 +18,8 @@ const SignUp = ({ onClickLink }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [match, setMatch] = useState(true);
 
-  const [errors, setErrors] = useState({ name: false, password: false, email: false });
-
-
-  const validateFormFields = () => {
-    if (!isUsernameValid(name)) {
-      setErrors(({ ...errors, name: true }));
-    } else {
-      setErrors({ ...errors, name: false });
-    }
-
-    if (!isEmailValid(email)) {
-      setErrors({ ...errors, email: true });
-    } else {
-      setErrors({ ...errors, email: false });
-    }
-
-    if (!isPasswordValid(password)) {
-      setErrors({ ...errors, password: true });
-    } else {
-      setErrors({ ...errors, password: false });
-    }
-
-  };
+  const [errors, setErrors] =
+    useState({ name: false, password: false, email: false });
 
 
   const handleSubmit = async (event) => {
@@ -47,62 +27,62 @@ const SignUp = ({ onClickLink }) => {
 
     if (password !== confirmPassword) {
       setMatch(false);
+      return;
+    } else {
+      setMatch(true);
     }
 
-    validateFormFields();
+    const nameValid = isUsernameValid(name);
+    const emailValid = isEmailValid(email);
+    const passwordValid = isPasswordValid(password);
 
-    try {
+    setErrors({
+      name: !nameValid,
+      email: !emailValid,
+      password: !passwordValid,
+    });
 
-      const { user } = {
-        id: Date.now().toFixed(2).toString(),
-        name,
-        email,
-        password,
-      };
-
-// Todo create
-      axios.post(BASE_API, { user });
-
-      dispatch(login({ user }));
-
-    } catch (e) {
-
+    if (nameValid && emailValid && passwordValid) {
+      try {
+        const { data } = await axios.post(`${BASE_API}/signup`, { name, email, password });
+        dispatch(login(data));
+      } catch (error) {
+        console.error(error);
+      }
     }
-
   };
 
 
   return (
     <form className={'flex flex-col'} onSubmit={handleSubmit}>
       <h2 className={'self-center mb-4 text-lg text-white'}>Registration</h2>
-      <input name={'Name'}
-             className='p-1 bg-transparent mb-5 rounded-md border-b-2 outline-none border-white text-white text-md placeholder-white'
-             type='text'
-             value={name}
-             onChange={({ target }) => setName(target.value)}
-             placeholder={'Name'} />
-      {errors.name && <span className={'text-red-500'}>This is not valid username</span>}
-      <input name={'email'}
-             className='p-1 bg-transparent mb-5 rounded-md border-b-2 outline-none border-white text-white text-md placeholder-white'
-             type='text'
-             value={email}
-             onChange={({ target }) => setEmail(target.value)}
-             placeholder={'Email'} />
-      {errors.email && <span className='text-red-500'>This is not valid email</span>}
-      <input name={'password'}
-             className='p-1 bg-transparent mb-5 rounded-md border-b-2 outline-none border-white text-white text-md placeholder-white'
-             type='password'
-             value={password}
-             onChange={({ target }) => setPassword(target.value)}
-             placeholder={'Password'} />
-      {errors.password && <span className={'text-red-500'}>This is not valid password</span>}
-      <input name={'confirmPassword'}
-             className='p-1 bg-transparent mb-5 rounded-md border-b-2 outline-none border-white text-white text-md placeholder-white'
+      <div className='mb-4'>
+        <Input name={'name'} value={name} onChange={({ target }) => {
+          setName(target.value);
+        }} placeholder={'Name'} />
+        <FieldError isVisible={errors.name} errorMessage={'This is not valid name'} />
+      </div>
+      <div className='mb-4'>
+        <Input name={'email'}
+               value={email}
+               onChange={({ target }) => setEmail(target.value)}
+               placeholder={'Email'} />
+        <FieldError isVisible={errors.email} errorMessage={'This is not valid email'} />
+      </div>
+      <div className='mb-4'>
+        <Input name={'password'}
+               type={'password'}
+               value={password}
+               onChange={({ target }) => setPassword(target.value)}
+               placeholder={'Password'} />
+        <FieldError isVisible={errors.password} errorMessage={'This is not valid password'} />
+      </div>
+      <Input name={'confirmPassword'}
              type='password'
              value={confirmPassword}
              onChange={({ target }) => setConfirmPassword(target.value)}
              placeholder={'Confirm password'} />
-      {match === false && <span className='text-red-500 mb-5'>Password is not matched</span>}
+      <FieldError isVisible={!match} errorMessage={'Password is not matched'} />
       <button
         className='self-center px-10 py-1 mb-5 bg-pink-600 hover:bg-pink-700 text-white  rounded'>
         Create Account
