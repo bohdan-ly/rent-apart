@@ -7,12 +7,12 @@ export const navigateTo = (path) => void (navigateFunc && navigateFunc(path));
 export const PATHS = {
   root: '/',
   main: {
-    root: '/home',
+    root: '/dashboard',
   },
-  categories: {
-    root: '/categories',
-    category: '/categories/:categoryId',
-    project: '/categories/:categoryId/:projectId',
+  realty: {
+    root: '/realty',
+    details: '/realty/:slug',
+    edit: 'edit/realty/:slug?',
   },
   profile: {
     root: '/profile',
@@ -20,6 +20,9 @@ export const PATHS = {
   },
   explore: {
     root: '/explore',
+  },
+  auth: {
+    login: '/login',
   },
   error: {
     root: '/error',

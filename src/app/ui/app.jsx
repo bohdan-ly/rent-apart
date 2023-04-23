@@ -21,7 +21,7 @@ export const App = () => {
           </div>
         }
       >
-        <Layout>{(isReady && <Routes />) || <Loading />}</Layout>
+        {(isReady && <Routes />) || <Loading />}
       </Suspense>
     </ConnectAPI>
   );

@@ -11,7 +11,6 @@ export class ApiRealty {
       });
 
       ApiAbortController.clearController('getRealties');
-      console.log(json);
 
       if (json.status !== 'success') {
         Api.handleErrorMessage(json);
