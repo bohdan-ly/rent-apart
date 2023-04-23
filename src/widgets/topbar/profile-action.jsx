@@ -9,7 +9,7 @@ export const ProfileAction = ({ title = '', disabled, action = () => {} }) => {
         onClick={(e) => {
           e.preventDefault();
 
-          if (disabled) action();
+          if (!disabled) action();
         }}
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 relative"
       >
