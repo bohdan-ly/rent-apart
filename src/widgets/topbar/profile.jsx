@@ -16,8 +16,8 @@ export const Profile = () => {
   useOnClickOutside(menuRef, () => setOpened(false));
 
   const profileActions = [
-    { title: 'Profile' },
-    { title: 'Settings' },
+    { title: 'Profile', disabled: true },
+    { title: 'Settings', disabled: true },
     {
       title: 'Sign Out',
       action: () => {

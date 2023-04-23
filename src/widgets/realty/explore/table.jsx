@@ -15,7 +15,7 @@ export const RealtyList = ({ filter }) => {
         })}
       >
         {realties.map((r, idx) => (
-          <RealtyCard key={idx} {...r} />
+          <RealtyCard key={idx} keyword={filter?.search || ''} {...r} />
         ))}
         <CreateRealty />
       </div>

@@ -4,13 +4,15 @@ import { Button } from 'shared/ui/button';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Gallery } from './gallery';
 import { Api } from 'app/model/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addRealty, updateRealty } from 'store/realty/slice';
 import { useNavigate } from 'react-router-dom';
+import { selectUser } from 'store/user/selector';
 
 export const Form = ({ initialData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector(selectUser);
   const [form, setForm] = React.useState(initialData || {});
 
   const saveRealty = async () => {
@@ -19,7 +21,7 @@ export const Form = ({ initialData }) => {
       await dispatch(updateRealty(realty));
       navigate(`/realty/${realty.slug}`);
     } else {
-      const { realty } = await Api.Realty.createRealty(form);
+      const { realty } = await Api.Realty.createRealty({ ...form, owner: user._id });
       await dispatch(addRealty(realty));
       navigate(`/realty/${realty.slug}`);
     }

@@ -92,7 +92,7 @@ export const Sidebar = () => {
           </ul>
         </div>
       </aside>
-      <div className="bg-red fixed sm:sticky top-0 right-0 w-full">
+      <div className="z-[35] fixed sm:sticky top-0 right-0 w-full">
         <TopBar />
       </div>
     </>

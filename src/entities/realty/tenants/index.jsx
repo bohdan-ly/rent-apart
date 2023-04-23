@@ -58,7 +58,6 @@ export const Tenants = () => {
   const [tenants, setTenants] = React.useState(generalTenants);
 
   const handleChangeFilter = (filter) => {
-    console.log(filter.value);
     switch (filter.value) {
       case 'all':
         setTenants(generalTenants);

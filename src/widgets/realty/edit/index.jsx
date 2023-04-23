@@ -7,7 +7,6 @@ import { Form } from './form';
 export const RealtyEdit = () => {
   const { slug } = useParams();
   const realty = useSelector(selectRealtyBySlug(slug));
-  console.log(realty);
   return (
     <Section
       title={realty ? 'Edit realty' : 'Create new realty'}

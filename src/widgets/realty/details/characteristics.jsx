@@ -1,7 +1,6 @@
 import React from 'react';
 
 export const Characteristics = ({ rooms, area, address, location, status }) => {
-  console.log(rooms, area, address, location, status);
   return (
     <div className="lg:col-span-3">
       <table className="w-full mt-5 text-sm text-left text-gray-500">
@@ -38,7 +37,7 @@ export const Characteristics = ({ rooms, area, address, location, status }) => {
             >
               Status <span className="underline">{status || '(?)'}</span>
             </th>
-            <td className="px-6 py-4 font-medium text-gray-900">Chaos</td>
+            <td className="px-6 py-4 font-medium text-gray-900">Parking {'(?)'}</td>
           </tr>
           {/* <tr className="border-b border-gray-200">
             <th

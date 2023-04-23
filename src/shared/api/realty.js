@@ -48,6 +48,7 @@ export class ApiRealty {
 
   static async createRealty(realtyData) {
     try {
+      console.log(realtyData);
       const json = await Api.fetchRetry(`${BASE_API}/realty`, {
         method: 'POST',
         signal: ApiAbortController.genController('updateRealty').signal,

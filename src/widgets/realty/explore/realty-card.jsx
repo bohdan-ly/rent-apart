@@ -1,10 +1,9 @@
 import { BASE_STATIC_API } from 'constants';
 import React from 'react';
-import { SunIcon } from '@heroicons/react/24/outline';
-import { Cars } from 'shared/icons';
+import Highlighter from 'react-highlight-words';
 import { useNavigate } from 'react-router-dom';
 
-export const RealtyCard = ({ name, slug, summary, imageCover }) => {
+export const RealtyCard = ({ name, keyword = '', slug, summary, imageCover }) => {
   const navigate = useNavigate();
 
   return (
@@ -26,7 +25,14 @@ export const RealtyCard = ({ name, slug, summary, imageCover }) => {
         <dl>
           <div>
             <dt className="sr-only">Name</dt>
-            <dd className="font-medium truncate">{name}</dd>
+            <dd className="font-medium truncate">
+              <Highlighter
+                highlightClassName="YourHighlightClass"
+                searchWords={[keyword]}
+                autoEscape={true}
+                textToHighlight={name}
+              />
+            </dd>
           </div>
           <div>
             <dt className="sr-only">Summary</dt>
