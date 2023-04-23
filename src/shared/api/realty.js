@@ -22,19 +22,73 @@ export class ApiRealty {
       return null;
     }
   }
-  static async getRecipeById(recipeId) {
+  static async updateRealty(realtyData) {
     try {
-      const json = await Api.fetchRetry(`${BASE_API}/lookup.php?i=${recipeId}`, {
-        signal: ApiAbortController.genController('getRecipeById').signal,
+      const json = await Api.fetchRetry(`${BASE_API}/realty/${realtyData.id}`, {
+        method: 'PATCH',
+        signal: ApiAbortController.genController('updateRealty').signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(realtyData),
       });
 
-      ApiAbortController.clearController('getRecipeById');
+      ApiAbortController.clearController('updateRealty');
 
-      if (!json.success) {
+      if (json.status !== 'success') {
         Api.handleErrorMessage(json);
       }
+      const { data } = json;
+      return { realty: data.data };
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
 
-      return json;
+  static async createRealty(realtyData) {
+    try {
+      const json = await Api.fetchRetry(`${BASE_API}/realty`, {
+        method: 'POST',
+        signal: ApiAbortController.genController('updateRealty').signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(realtyData),
+      });
+
+      ApiAbortController.clearController('updateRealty');
+
+      if (json.status !== 'success') {
+        Api.handleErrorMessage(json);
+      }
+      const { data } = json;
+      return { realty: data.data };
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async uploadImage(image) {
+    try {
+      const json = await Api.fetchRetry(`${BASE_API}/realty/upload-image`, {
+        method: 'POST',
+        signal: ApiAbortController.genController('uploadImage').signal,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        //   enctype: 'multipart/form-data',
+        // },
+        body: image,
+      });
+
+      ApiAbortController.clearController('uploadImage');
+
+      if (json.status !== 'success') {
+        Api.handleErrorMessage(json);
+      }
+      const { data } = json;
+      return { ...data };
     } catch (err) {
       console.error(err);
       return null;

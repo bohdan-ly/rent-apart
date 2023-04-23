@@ -20,6 +20,7 @@ export class ApiAuth {
       if (json.status !== 'success') {
         Api.handleErrorMessage(json);
       }
+      window.localStorage.setItem('token', json.token);
 
       return { token: json.token };
     } catch (err) {
@@ -27,17 +28,24 @@ export class ApiAuth {
       return null;
     }
   }
-  static async register(recipeId) {
+  static async register({ name, email, password, passwordConfirm }) {
     try {
-      const json = await Api.fetchRetry(`${BASE_API}/lookup.php?i=${recipeId}`, {
-        signal: ApiAbortController.genController('getRecipeById').signal,
+      const json = await Api.fetchRetry(`${BASE_API}/users/signup`, {
+        method: 'POST',
+        signal: ApiAbortController.genController('register').signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password, passwordConfirm }),
       });
 
-      ApiAbortController.clearController('getRecipeById');
+      ApiAbortController.clearController('register');
 
       if (!json.success) {
         Api.handleErrorMessage(json);
       }
+
+      window.localStorage.setItem('token', json.token);
 
       return json;
     } catch (err) {
@@ -48,10 +56,10 @@ export class ApiAuth {
   static async logout() {
     try {
       const json = await Api.fetchRetry(`${BASE_API}/realty`, {
-        signal: ApiAbortController.genController('getRealties').signal,
+        signal: ApiAbortController.genController('logout').signal,
       });
 
-      ApiAbortController.clearController('getRealties');
+      ApiAbortController.clearController('logout');
 
       if (json.status !== 'success') {
         Api.handleErrorMessage(json);

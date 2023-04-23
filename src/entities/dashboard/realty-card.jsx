@@ -18,8 +18,7 @@ export const RealtyCard = ({ name, slug, summary, imageCover, price, area = 0, r
     >
       <img
         alt="Home"
-        // src={`${BASE_STATIC_API}/img/tours/${imageCover || 'tour-1-1.jpg'}`}
-        src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+        src={`${BASE_STATIC_API}/img/realty/${imageCover}`}
         className="h-56 w-full rounded-md object-cover"
       />
 

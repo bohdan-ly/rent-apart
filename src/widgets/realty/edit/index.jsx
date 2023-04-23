@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Section } from 'shared/ui/content';
@@ -14,7 +13,7 @@ export const RealtyEdit = () => {
       title={realty ? 'Edit realty' : 'Create new realty'}
       titleClassName="text-xl font-bold font-heading md:max-w-xl leading-none"
       className="mt-10"
-      content={<Form />}
+      content={<Form initialData={realty || null} />}
     />
   );
 };

@@ -10,7 +10,19 @@ export const RealtyDetails = () => {
   const { slug } = useParams();
   const realty = useSelector(selectRealtyBySlug(slug));
 
-  const { name, description, summary, price } = realty || {};
+  const {
+    name,
+    description,
+    summary,
+    price,
+    imageCover,
+    images,
+    rooms,
+    area,
+    address,
+    location,
+    status,
+  } = realty || {};
 
   return (
     <section className="">
@@ -64,9 +76,15 @@ export const RealtyDetails = () => {
         </nav> */}
 
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 md:grid-cols-5 lg:gap-16">
-          <Gallery />
+          <Gallery imageCover={imageCover} images={images} />
           <About description={description} summary={summary} price={price} />
-          <Characteristics />
+          <Characteristics
+            rooms={rooms}
+            area={area}
+            // address={address}
+            location={location}
+            status={status}
+          />
         </div>
       </div>
     </section>

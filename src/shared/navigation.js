@@ -23,6 +23,7 @@ export const PATHS = {
   },
   auth: {
     login: '/login',
+    reg: '/signup',
   },
   error: {
     root: '/error',

@@ -63,6 +63,8 @@ export const ConnectAPI = ({ children }) => {
     setProgress(100);
   };
 
+  window.fetchNecessaryData = fetchNecessaryData;
+
   return (
     <>
       <LoadingBar

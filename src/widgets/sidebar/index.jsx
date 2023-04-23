@@ -34,11 +34,13 @@ const secondary = [
     title: 'Statistics',
     path: 'statistics',
     icon: <PresentationChartLineIcon />,
+    disabled: true,
   },
   {
     title: 'Advertising',
     path: 'advertising',
     icon: <RocketLaunchIcon />,
+    disabled: true,
   },
 ];
 

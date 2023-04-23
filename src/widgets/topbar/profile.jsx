@@ -5,14 +5,27 @@ import { useOnClickOutside } from 'usehooks-ts';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'store/user/selector';
 import { BASE_STATIC_API } from 'constants';
-
-const profileActions = [{ title: 'Profile' }, { title: 'Settings' }, { title: 'Sign Out' }];
+import { useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
+  const navigate = useNavigate();
+
   const menuRef = React.useRef();
   const [opened, setOpened] = React.useState(false);
   const { user } = useSelector(selectUser);
   useOnClickOutside(menuRef, () => setOpened(false));
+
+  const profileActions = [
+    { title: 'Profile' },
+    { title: 'Settings' },
+    {
+      title: 'Sign Out',
+      action: () => {
+        window.localStorage.clear();
+        navigate('/login');
+      },
+    },
+  ];
 
   return (
     <div ref={menuRef}>

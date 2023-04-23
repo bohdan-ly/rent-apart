@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const Characteristics = ({ rooms, area, address, location, status }) => {
+  console.log(rooms, area, address, location, status);
   return (
     <div className="lg:col-span-3">
       <table className="w-full mt-5 text-sm text-left text-gray-500">

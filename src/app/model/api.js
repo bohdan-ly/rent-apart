@@ -24,8 +24,19 @@ export class Api {
         retryDelay: 3000,
       };
 
+      const token = window.localStorage.getItem('token');
+
+      const fetchOptions = {
+        ...props,
+        headers: { ...(props.headers || {}) },
+      };
+
+      if (token) {
+        fetchOptions.headers.Authorization = `Bearer ${token}`;
+      }
+
       const fetch = fetchBuilder(originalFetch, options);
-      const data = await fetch(path, props);
+      const data = await fetch(path, fetchOptions);
       const json = await data.json();
       return json;
     } catch (err) {

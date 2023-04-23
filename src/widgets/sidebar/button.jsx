@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { PROLabel } from 'shared/ui/pro';
 
-export const SidebarButton = ({ title = 'Dashboard', icon = null, path }) => {
+export const SidebarButton = ({ title = 'Dashboard', icon = null, path, disabled = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -11,7 +12,9 @@ export const SidebarButton = ({ title = 'Dashboard', icon = null, path }) => {
         href="#"
         onClick={(e) => {
           e.preventDefault();
-          navigate(`/${path}`);
+          if (!disabled) {
+            navigate(`/${path}`);
+          }
         }}
         className={classNames('flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100', {
           'bg-slate-200': location.pathname.indexOf(`/${path}`) === 0,
@@ -25,6 +28,7 @@ export const SidebarButton = ({ title = 'Dashboard', icon = null, path }) => {
           {icon}
         </div>
         <span className="ml-3">{title}</span>
+        {disabled && <PROLabel className="right-4" />}
       </a>
     </li>
   );

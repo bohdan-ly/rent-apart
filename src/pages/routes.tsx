@@ -4,8 +4,11 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import { PATHS } from 'shared/navigation';
 
 import DashboardPage from 'pages/dashboard';
+import RealtyDetailsPage from 'pages/realty/details';
+import RealtyEditPage from 'pages/realty/edit';
 import LoginPage from './auth';
 import { AuthGuard } from 'entities/session/auth';
+import SignUpPage from './auth/signup';
 
 const lazyLoad = (loadedModule) =>
   React.lazy(() =>
@@ -20,8 +23,6 @@ const lazyLoad = (loadedModule) =>
     }),
   );
 
-const RealtyDetailsPage = lazyLoad(() => import('./realty/details'));
-const RealtyEditPage = lazyLoad(() => import('./realty/edit'));
 const ExplorePage = lazyLoad(() => import('./realty/explore'));
 
 const routesMap = [
@@ -64,6 +65,10 @@ const routesMap = [
   {
     path: PATHS.auth.login,
     element: <LoginPage />,
+  },
+  {
+    path: PATHS.auth.reg,
+    element: <SignUpPage />,
   },
   {
     path: PATHS.error.accessDenied,

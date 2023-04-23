@@ -18,6 +18,17 @@ export const realtySlice = createSlice({
     setRealties: (state, action) => {
       state.realties = action.payload;
     },
+    addRealty: (state, action) => {
+      state.realties = [...state.realties, action.payload];
+    },
+    updateRealty: (state, action) => {
+      const rIdx = state.realties.findIndex((r) => r.id === action.payload.id);
+      if (rIdx !== -1) {
+        const newRealties = [...state.realties];
+        newRealties[rIdx] = action.payload;
+        state.realties = newRealties;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRealties.pending, (state) => {
@@ -36,6 +47,6 @@ export const realtySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setRealties } = realtySlice.actions;
+export const { setRealties, updateRealty, addRealty } = realtySlice.actions;
 
 export default realtySlice.reducer;
