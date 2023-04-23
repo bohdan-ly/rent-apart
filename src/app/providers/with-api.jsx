@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
 import { fetchRealties } from 'store/realty/slice';
+import { fetchUser } from 'store/user/slice';
 
 // import { Category } from 'store/categories/types';
 // import { Product } from 'store/fridge/types';
@@ -14,7 +15,7 @@ export const ConnectAPI = ({ children }) => {
   const [networkRequestThread, setNetworkRequestThread] = React.useState('');
 
   // const user = useSelector((state) => getUser(state));
-  const user = { token: '123', isLoggedIn: true };
+  const user = JSON.parse(window.localStorage.getItem('user') || 'null');
 
   const setProgress = (val) => {
     if (!user) _setProgress(0);
@@ -32,7 +33,7 @@ export const ConnectAPI = ({ children }) => {
   React.useEffect(() => {
     console.log('Init api...');
 
-    if (!user || !user.token || !user.isLoggedIn) {
+    if (!user) {
       setProgress(0);
       window.clearTimeout(networkRequestThread);
       return;

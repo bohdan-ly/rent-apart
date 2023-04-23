@@ -2,13 +2,16 @@ import React from 'react';
 import { ProfileAction } from './profile-action';
 import classNames from 'classnames';
 import { useOnClickOutside } from 'usehooks-ts';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'store/user/selector';
+import { BASE_STATIC_API } from 'constants';
 
 const profileActions = [{ title: 'Profile' }, { title: 'Settings' }, { title: 'Sign Out' }];
 
 export const Profile = () => {
   const menuRef = React.useRef();
   const [opened, setOpened] = React.useState(false);
-
+  const { user } = useSelector(selectUser);
   useOnClickOutside(menuRef, () => setOpened(false));
 
   return (
@@ -22,7 +25,7 @@ export const Profile = () => {
         <span className="sr-only">Open user menu</span>
         <img
           className="w-8 h-8 rounded-full"
-          src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+          src={`${BASE_STATIC_API}/img/users/${user.photo}`}
           alt="user photo"
         />
       </button>
@@ -37,8 +40,8 @@ export const Profile = () => {
         id="user-dropdown"
       >
         <div className="px-4 py-3">
-          <span className="block text-sm text-gray-900">Bonnie Green</span>
-          <span className="block text-sm  text-gray-500 truncate">name@flowbite.com</span>
+          <span className="block text-sm text-gray-900">{user.name}</span>
+          <span className="block text-sm  text-gray-500 truncate">{user.email}</span>
         </div>
         <ul className="py-2" aria-labelledby="user-menu-button">
           {profileActions.map((a) => (
@@ -62,9 +65,9 @@ export const Profile = () => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           ></path>
         </svg>
       </button>

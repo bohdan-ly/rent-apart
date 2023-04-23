@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Api } from 'app/model/api';
 
-export const fetchRealties = createAsyncThunk('realties/fetchRealties', async ({}) => {
+export const fetchRealties = createAsyncThunk('realties/fetchRealties', async () => {
   const { realties } = await Api.Realty.getRealties();
   return realties;
 });

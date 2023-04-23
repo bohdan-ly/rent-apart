@@ -1,43 +1,72 @@
+import { BASE_STATIC_API } from 'constants';
 import React from 'react';
+import { SunIcon } from '@heroicons/react/24/outline';
+import { Cars } from 'shared/icons';
+import { useNavigate } from 'react-router-dom';
 
-export const RealtyCard = ({}) => {
+export const RealtyCard = ({ name, slug, summary, imageCover, price, area = 0, rooms = 1 }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex items-center justify-center rounded bg-gray-50 h-28">
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-        </a>
-        <div className="p-5">
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology acquisitions 2021
-            </h5>
-          </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse
-            chronological order.
-          </p>
-          <a
-            href="#"
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Read more
-            <svg
-              aria-hidden="true"
-              className="w-4 h-4 ml-2 -mr-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </a>
+    <a
+      href="/"
+      onClick={(e) => {
+        e.preventDefault();
+        navigate(`/realty/${slug}`);
+      }}
+      className="block rounded-lg p-4 shadow-sm shadow-indigo-100 cursor-pointer group hover:scale-[1.01] hover:shadow-gray-300 transition-all"
+    >
+      <img
+        alt="Home"
+        // src={`${BASE_STATIC_API}/img/tours/${imageCover || 'tour-1-1.jpg'}`}
+        src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+        className="h-56 w-full rounded-md object-cover"
+      />
+
+      <div className="mt-2">
+        <dl>
+          <div>
+            <dt className="sr-only">Name</dt>
+            <dd className="font-medium">{name}</dd>
+          </div>
+          <div>
+            <dt className="sr-only">Address</dt>
+
+            <dd className="text-xs text-gray-500">123 Wallaby Avenue, Park Road</dd>
+          </div>
+          <div className="mt-1">
+            <div className="flex flex-wrap gap-2 items-center">
+              <span className="sr-only">Price</span>
+              <div className="text-sm text-gray-600">${price}</div>
+              <div className="h-[2px] w-[2px] bg-gray-600 rounded-full" />
+              <span className="sr-only">Area</span>
+              <div className="text-sm text-gray-600">{area}m²</div>
+            </div>
+          </div>
+        </dl>
+
+        <div className="mt-6 flex items-center gap-8 text-xs">
+          <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+            <Cars className="h-5 w-5 fill-indigo-700" />
+
+            <div className="mt-1.5 sm:mt-0">
+              <p className="text-gray-500">Parking</p>
+
+              <p className="font-medium">2 spaces</p>
+            </div>
+          </div>
+
+          <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+            <SunIcon className="h-5 w-5 text-yellow-400" />
+
+            <div className="mt-1.5 sm:mt-0">
+              <p className="text-gray-500">Rooms</p>
+
+              <p className="font-medium">{rooms} rooms</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };

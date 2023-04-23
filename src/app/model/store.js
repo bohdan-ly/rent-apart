@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import realty from 'store/realty/slice';
-import auth from 'store/auth/slice.js';
+import popup from 'store/popup/slice';
+import user from 'store/user/slice';
 
 export const store = configureStore({
   reducer: {
     realty,
-    auth,
+    popup,
+    user,
   },
 });

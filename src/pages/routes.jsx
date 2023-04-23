@@ -5,10 +5,14 @@ import { PATHS } from 'shared/navigation';
 
 import AuthPage from 'pages/auth';
 import DashboardPage from 'pages/dashboard';
+import LoginPage from './auth';
+import { AuthGuard } from 'entities/session/auth';
 
 const lazyLoad = (loadedModule) =>
   React.lazy(() =>
     loadedModule().catch((err) => {
+      console.log(err);
+
       if (err.message && /Loading chunk [\d]+ failed/.test(err.message)) {
         // return { default: ServerErrorPage };
         return { default: <div>500</div> };
@@ -17,7 +21,9 @@ const lazyLoad = (loadedModule) =>
     }),
   );
 
-// const WelcomePage = lazyLoad(() => import("./home"));
+const RealtyDetailsPage = lazyLoad(() => import('./realty/details'));
+const RealtyEditPage = lazyLoad(() => import('./realty/edit'));
+const ExplorePage = lazyLoad(() => import('./realty/explore'));
 
 const routesMap = [
   {
@@ -26,7 +32,39 @@ const routesMap = [
   },
   {
     path: PATHS.main.root,
-    element: <DashboardPage />,
+    element: (
+      <AuthGuard>
+        <DashboardPage />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: PATHS.realty.root,
+    element: (
+      <AuthGuard>
+        <ExplorePage />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: PATHS.realty.details,
+    element: (
+      <AuthGuard>
+        <RealtyDetailsPage />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: PATHS.realty.edit,
+    element: (
+      <AuthGuard>
+        <RealtyEditPage />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: PATHS.auth.login,
+    element: <LoginPage />,
   },
   {
     path: PATHS.auth.root,
