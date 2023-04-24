@@ -32,19 +32,35 @@ const routesMap = [
   },
   {
     path: PATHS.main.root,
-    element: <DashboardPage />,
+    element: (
+      <AuthGuard>
+        <DashboardPage />
+      </AuthGuard>
+    ),
   },
   {
     path: PATHS.realty.root,
-    element: <ExplorePage />,
+    element: (
+      <AuthGuard>
+        <ExplorePage />
+      </AuthGuard>
+    ),
   },
   {
     path: PATHS.realty.details,
-    element: <RealtyDetailsPage />,
+    element: (
+      <AuthGuard>
+        <RealtyDetailsPage />
+      </AuthGuard>
+    ),
   },
   {
     path: PATHS.realty.edit,
-    element: <RealtyEditPage />,
+    element: (
+      <AuthGuard>
+        <RealtyEditPage />
+      </AuthGuard>
+    ),
   },
   {
     path: PATHS.auth.login,
