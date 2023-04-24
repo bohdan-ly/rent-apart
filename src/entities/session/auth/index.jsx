@@ -8,6 +8,5 @@ import { selectUser } from 'store/user/selector';
 
 export const AuthGuard = ({ children, redirect = PATHS.auth.login }) => {
   const { user } = useSelector(selectUser);
-  return <Layout>{children}</Layout>;
-  // return user ? <Layout>{children}</Layout> : <Navigate to={redirect} />;
+  return user ? <Layout>{children}</Layout> : <Navigate to={redirect} />;
 };
